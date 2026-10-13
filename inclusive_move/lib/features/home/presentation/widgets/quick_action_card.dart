@@ -49,7 +49,7 @@ class QuickActionCard extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: AppTheme.white,
+                color: AppTheme.textPrimary,
                 height: 1.3,
               ),
             ),

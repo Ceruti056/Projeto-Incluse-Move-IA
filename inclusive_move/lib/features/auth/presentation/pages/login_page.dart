@@ -67,15 +67,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     });
 
     return Scaffold(
-      backgroundColor: AppTheme.backgroundNavy,
+      backgroundColor: AppTheme.backgroundWhite,
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF0A1628), AppTheme.backgroundNavy],
-          ),
-        ),
+        color: AppTheme.backgroundWhite,
         child: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
@@ -91,41 +85,48 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     child: Column(
                       children: [
                         Container(
-                          width: 72,
-                          height: 72,
+                          width: 76,
+                          height: 76,
                           decoration: BoxDecoration(
-                            color: AppTheme.primaryOrange.withOpacity(0.15),
+                            color: AppTheme.primaryOrangeLight,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: AppTheme.primaryOrange.withOpacity(0.4),
+                              color: AppTheme.primaryOrange.withOpacity(0.35),
                               width: 2,
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.primaryOrange.withOpacity(0.12),
+                                blurRadius: 16,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
                           child: const Icon(
                             Icons.accessible_forward_rounded,
-                            size: 38,
+                            size: 40,
                             color: AppTheme.primaryOrange,
                           ),
                         ).animate().scale(
                               duration: 600.ms,
                               curve: Curves.elasticOut,
                             ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         RichText(
                           text: const TextSpan(
                             children: [
                               TextSpan(
                                 text: 'Inclus',
                                 style: TextStyle(
-                                  fontSize: 28,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.w800,
-                                  color: AppTheme.white,
+                                  color: AppTheme.textPrimary,
                                 ),
                               ),
                               TextSpan(
                                 text: 'I',
                                 style: TextStyle(
-                                  fontSize: 28,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.w800,
                                   color: AppTheme.primaryOrange,
                                 ),
@@ -133,9 +134,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               TextSpan(
                                 text: 'Move',
                                 style: TextStyle(
-                                  fontSize: 28,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.w800,
-                                  color: AppTheme.white,
+                                  color: AppTheme.textPrimary,
                                 ),
                               ),
                             ],

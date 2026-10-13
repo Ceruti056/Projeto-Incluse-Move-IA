@@ -71,11 +71,11 @@ class _SosPageState extends ConsumerState<SosPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A0000),
+      backgroundColor: AppTheme.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0000),
+        backgroundColor: AppTheme.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded),
+          icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
@@ -156,7 +156,7 @@ class _SosPageState extends ConsumerState<SosPage>
               const Text(
                 'Toque para chamar o SAMU (192)',
                 style: TextStyle(
-                  color: AppTheme.white,
+                  color: AppTheme.textPrimary,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -218,7 +218,7 @@ class _SosPageState extends ConsumerState<SosPage>
                           Text(
                             'Sua localização está sendo compartilhada',
                             style: TextStyle(
-                              color: AppTheme.white,
+                              color: AppTheme.textPrimary,
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
                             ),

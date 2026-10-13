@@ -1,71 +1,306 @@
 // ============================================================================
 // core/theme/app_theme.dart - Sistema de Design InclusIMove
 // ============================================================================
-// Define paleta de cores, tipografia e temas claro/escuro com Material 3.
-// Cores principais: Laranja #FF6B35 | Azul Escuro #0D1B3E | Branco
+// Cor principal do sistema: Branco #FFFFFF / #F8FAFC
+// Cor de destaque / CTA: Laranja #FF6B35
+// Tipografia e contraste: Slate / Navy Brand #0F172A
 // ============================================================================
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Classe estática que centraliza todo o sistema de design do app
+/// Centraliza todo o sistema de design do app InclusIMove
 class AppTheme {
-  AppTheme._(); // Construtor privado — não instanciar
+  AppTheme._();
 
-  // ── Paleta de Cores ─────────────────────────────────────────────────────────
+  // ── Paleta de Cores (Branco como Cor Principal) ─────────────────────────────
 
-  /// Laranja principal — botões de ação, destaques, CTAs
+  /// Laranja principal — botões de ação, destaques, CTAs da marca
   static const Color primaryOrange = Color(0xFFFF6B35);
 
-  /// Laranja mais escuro para estado pressed/hover
+  /// Laranja escuro para estados pressed/hover
   static const Color primaryOrangeDark = Color(0xFFE85520);
 
-  /// Azul escuro — fundo principal no dark mode
-  static const Color backgroundNavy = Color(0xFF0D1B3E);
+  /// Laranja suave para backgrounds de chips e destaques leves
+  static const Color primaryOrangeLight = Color(0xFFFFF0EB);
 
-  /// Azul médio — cards e containers no dark mode
-  static const Color surfaceNavy = Color(0xFF1A2B52);
-
-  /// Azul claro — para superfícies secundárias
-  static const Color surfaceNavyLight = Color(0xFF243563);
-
-  /// Branco puro
+  /// Branco puro — cor principal das superfícies e cards
   static const Color white = Color(0xFFFFFFFF);
 
-  /// Cinza suave para texto secundário
-  static const Color textSecondary = Color(0xFFB0BEC5);
+  /// Fundo principal do sistema (Branco com toque sutil para conforto visual)
+  static const Color backgroundWhite = Color(0xFFF8FAFC);
 
-  /// Verde de sucesso
-  static const Color success = Color(0xFF4CAF50);
+  /// Superfície de cards e containers
+  static const Color surfaceWhite = Color(0xFFFFFFFF);
 
-  /// Vermelho de erro / SOS
-  static const Color error = Color(0xFFF44336);
+  /// Bordas sutis e divisores
+  static const Color surfaceBorder = Color(0xFFE2E8F0);
 
-  /// Amarelo de aviso
-  static const Color warning = Color(0xFFFFC107);
+  /// Superfície secundária / fundo de input inativo
+  static const Color surfaceBorderLight = Color(0xFFF1F5F9);
 
-  // ── Tema Escuro (padrão do app) ────────────────────────────────────────────
+  /// Azul escuro da marca — mantido para tipografia marcante e contraste
+  static const Color navyBrand = Color(0xFF0D1B3E);
+
+  /// Tipografia principal (alto contraste sobre fundo branco)
+  static const Color textPrimary = Color(0xFF0F172A);
+
+  /// Tipografia secundária (subtítulos e labels auxiliares)
+  static const Color textSecondary = Color(0xFF64748B);
+
+  /// Tipografia terciária (placeholders e textos suaves)
+  static const Color textTertiary = Color(0xFF94A3B8);
+
+  /// Cores de estado e utilidade
+  static const Color success = Color(0xFF10B981);
+  static const Color error = Color(0xFFEF4444);
+  static const Color warning = Color(0xFFF59E0B);
+
+  // ── Aliases de compatibilidade para código legado ───────────────────────────
+  // Mapeiam os antigos nomes azul-escuro diretamente para o novo sistema branco
+  static const Color backgroundNavy = backgroundWhite;
+  static const Color surfaceNavy = surfaceWhite;
+  static const Color surfaceNavyLight = surfaceBorder;
+
+  // ── Tema Claro (Padrão do Sistema — Branco como Cor Principal) ─────────────
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+
+      colorScheme: const ColorScheme.light(
+        primary: primaryOrange,
+        onPrimary: white,
+        secondary: Color(0xFF2563EB),
+        onSecondary: white,
+        surface: surfaceWhite,
+        onSurface: textPrimary,
+        error: error,
+        onError: white,
+      ),
+
+      scaffoldBackgroundColor: backgroundWhite,
+
+      textTheme: GoogleFonts.interTextTheme(
+        const TextTheme(
+          displayLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.w800,
+            color: textPrimary,
+            letterSpacing: -0.5,
+          ),
+          displayMedium: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.w700,
+            color: textPrimary,
+          ),
+          headlineLarge: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: textPrimary,
+          ),
+          headlineMedium: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: textPrimary,
+          ),
+          titleLarge: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: textPrimary,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: textPrimary,
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: textPrimary,
+            height: 1.5,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: textSecondary,
+            height: 1.5,
+          ),
+          labelLarge: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: white,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ),
+
+      appBarTheme: AppBarTheme(
+        backgroundColor: surfaceWhite,
+        elevation: 0,
+        scrolledUnderElevation: 0.5,
+        surfaceTintColor: Colors.transparent,
+        centerTitle: false,
+        titleTextStyle: GoogleFonts.inter(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: textPrimary,
+        ),
+        iconTheme: const IconThemeData(color: textPrimary, size: 24),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryOrange,
+          foregroundColor: white,
+          minimumSize: const Size(double.infinity, 56),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          textStyle: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.5,
+          ),
+          elevation: 2,
+          shadowColor: primaryOrange.withOpacity(0.3),
+        ),
+      ),
+
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: primaryOrange,
+          side: const BorderSide(color: primaryOrange, width: 2),
+          minimumSize: const Size(double.infinity, 56),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          textStyle: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surfaceWhite,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 18,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: surfaceBorder, width: 1.5),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: surfaceBorder, width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: primaryOrange, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: error, width: 1.5),
+        ),
+        hintStyle: const TextStyle(color: textTertiary, fontSize: 15),
+        labelStyle: const TextStyle(color: textSecondary, fontSize: 15),
+        floatingLabelStyle: const TextStyle(
+          color: primaryOrange,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
+        prefixIconColor: textSecondary,
+        suffixIconColor: textSecondary,
+      ),
+
+      cardTheme: CardTheme(
+        color: surfaceWhite,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: surfaceBorder, width: 1),
+        ),
+        margin: EdgeInsets.zero,
+      ),
+
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: surfaceWhite,
+        selectedItemColor: primaryOrange,
+        unselectedItemColor: textTertiary,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: GoogleFonts.inter(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+        ),
+        unselectedLabelStyle: GoogleFonts.inter(
+          fontSize: 11,
+          fontWeight: FontWeight.w400,
+        ),
+        elevation: 8,
+      ),
+
+      chipTheme: ChipThemeData(
+        backgroundColor: surfaceBorderLight,
+        selectedColor: primaryOrangeLight,
+        labelStyle: const TextStyle(color: textPrimary, fontSize: 13),
+        side: const BorderSide(color: surfaceBorder),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+
+      dividerTheme: const DividerThemeData(
+        color: surfaceBorder,
+        thickness: 1,
+        space: 1,
+      ),
+
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: primaryOrange,
+        foregroundColor: white,
+        elevation: 6,
+        shape: CircleBorder(),
+      ),
+
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: textPrimary,
+        contentTextStyle: GoogleFonts.inter(
+          color: white,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  // ── Tema Escuro (Modo Alternativo) ─────────────────────────────────────────
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
 
-      // Esquema de cores
       colorScheme: const ColorScheme.dark(
         primary: primaryOrange,
         onPrimary: white,
         secondary: Color(0xFF64B5F6),
-        onSecondary: backgroundNavy,
-        surface: surfaceNavy,
+        onSecondary: navyBrand,
+        surface: Color(0xFF1E293B),
         onSurface: white,
         error: error,
         onError: white,
       ),
 
-      // Cor de fundo
-      scaffoldBackgroundColor: backgroundNavy,
+      scaffoldBackgroundColor: const Color(0xFF0F172A),
 
-      // Tipografia — Google Fonts Inter
       textTheme: GoogleFonts.interTextTheme(
         const TextTheme(
           displayLarge: TextStyle(
@@ -108,7 +343,7 @@ class AppTheme {
           bodyMedium: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: textSecondary,
+            color: Color(0xFF94A3B8),
             height: 1.5,
           ),
           labelLarge: TextStyle(
@@ -120,9 +355,8 @@ class AppTheme {
         ),
       ),
 
-      // AppBar
       appBarTheme: AppBarTheme(
-        backgroundColor: backgroundNavy,
+        backgroundColor: const Color(0xFF0F172A),
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
@@ -134,12 +368,11 @@ class AppTheme {
         iconTheme: const IconThemeData(color: white, size: 24),
       ),
 
-      // Botão elevado (CTA principal)
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryOrange,
           foregroundColor: white,
-          minimumSize: const Size(double.infinity, 56), // altura acessível
+          minimumSize: const Size(double.infinity, 56),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -153,7 +386,6 @@ class AppTheme {
         ),
       ),
 
-      // Botão outlined
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: primaryOrange,
@@ -169,10 +401,9 @@ class AppTheme {
         ),
       ),
 
-      // Campo de texto
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: surfaceNavy,
+        fillColor: const Color(0xFF1E293B),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
@@ -184,7 +415,7 @@ class AppTheme {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(
-            color: surfaceNavyLight,
+            color: Color(0xFF334155),
             width: 1.5,
           ),
         ),
@@ -196,32 +427,30 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: error, width: 1.5),
         ),
-        hintStyle: const TextStyle(color: textSecondary, fontSize: 15),
-        labelStyle: const TextStyle(color: textSecondary, fontSize: 15),
+        hintStyle: const TextStyle(color: Color(0xFF94A3B8), fontSize: 15),
+        labelStyle: const TextStyle(color: Color(0xFF94A3B8), fontSize: 15),
         floatingLabelStyle: const TextStyle(
           color: primaryOrange,
           fontSize: 13,
         ),
-        prefixIconColor: textSecondary,
-        suffixIconColor: textSecondary,
+        prefixIconColor: const Color(0xFF94A3B8),
+        suffixIconColor: const Color(0xFF94A3B8),
       ),
 
-      // Card
       cardTheme: CardTheme(
-        color: surfaceNavy,
+        color: const Color(0xFF1E293B),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: surfaceNavyLight, width: 1),
+          side: const BorderSide(color: Color(0xFF334155), width: 1),
         ),
         margin: EdgeInsets.zero,
       ),
 
-      // Bottom Navigation Bar
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: surfaceNavy,
+        backgroundColor: const Color(0xFF1E293B),
         selectedItemColor: primaryOrange,
-        unselectedItemColor: textSecondary,
+        unselectedItemColor: const Color(0xFF94A3B8),
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
@@ -236,25 +465,22 @@ class AppTheme {
         elevation: 16,
       ),
 
-      // Chip
       chipTheme: ChipThemeData(
-        backgroundColor: surfaceNavyLight,
+        backgroundColor: const Color(0xFF334155),
         selectedColor: primaryOrange.withOpacity(0.2),
         labelStyle: const TextStyle(color: white, fontSize: 13),
-        side: const BorderSide(color: surfaceNavyLight),
+        side: const BorderSide(color: Color(0xFF334155)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
       ),
 
-      // Divisor
       dividerTheme: const DividerThemeData(
-        color: surfaceNavyLight,
+        color: Color(0xFF334155),
         thickness: 1,
         space: 1,
       ),
 
-      // Floating Action Button
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: primaryOrange,
         foregroundColor: white,
@@ -262,9 +488,8 @@ class AppTheme {
         shape: CircleBorder(),
       ),
 
-      // SnackBar
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: surfaceNavyLight,
+        backgroundColor: const Color(0xFF1E293B),
         contentTextStyle: GoogleFonts.inter(
           color: white,
           fontSize: 14,
@@ -274,70 +499,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
         ),
         behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
-
-  // ── Tema Claro ─────────────────────────────────────────────────────────────
-  static ThemeData get lightTheme {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-
-      colorScheme: const ColorScheme.light(
-        primary: primaryOrange,
-        onPrimary: white,
-        secondary: Color(0xFF1565C0),
-        onSecondary: white,
-        surface: Color(0xFFF5F7FF),
-        onSurface: Color(0xFF1A2B52),
-        error: error,
-        onError: white,
-      ),
-
-      scaffoldBackgroundColor: const Color(0xFFF0F2F8),
-
-      textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme),
-
-      appBarTheme: AppBarTheme(
-        backgroundColor: white,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        surfaceTintColor: Colors.transparent,
-        centerTitle: false,
-        titleTextStyle: GoogleFonts.inter(
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: backgroundNavy,
-        ),
-        iconTheme: const IconThemeData(color: backgroundNavy, size: 24),
-      ),
-
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: primaryOrange,
-          foregroundColor: white,
-          minimumSize: const Size(double.infinity, 56),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          textStyle: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-          elevation: 4,
-          shadowColor: primaryOrange.withOpacity(0.3),
-        ),
-      ),
-
-      cardTheme: CardTheme(
-        color: white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: Color(0xFFE0E4F0), width: 1),
-        ),
-        margin: EdgeInsets.zero,
       ),
     );
   }

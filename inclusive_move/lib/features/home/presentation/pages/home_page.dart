@@ -50,7 +50,7 @@ class HomePage extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
-                          color: AppTheme.white,
+                          color: AppTheme.textPrimary,
                         ),
                       ),
                       const Text(
@@ -257,7 +257,7 @@ class _SupportCallButton extends StatelessWidget {
                 const Text(
                   'Precisa de ajuda?',
                   style: TextStyle(
-                    color: AppTheme.white,
+                    color: AppTheme.textPrimary,
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
                   ),
@@ -291,9 +291,9 @@ class _EmptyTripsHint extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceNavy,
+        color: AppTheme.surfaceWhite,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.surfaceNavyLight, width: 1),
+        border: Border.all(color: AppTheme.surfaceBorder, width: 1),
       ),
       child: Row(
         children: [
@@ -310,7 +310,7 @@ class _EmptyTripsHint extends StatelessWidget {
                 const Text(
                   'Sem viagens próximas',
                   style: TextStyle(
-                    color: AppTheme.white,
+                    color: AppTheme.textPrimary,
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),

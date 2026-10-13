@@ -55,7 +55,7 @@ class BookingConfirmPage extends StatelessWidget {
             const Text(
               'Revise os detalhes da sua corrida',
               style: TextStyle(
-                color: AppTheme.white,
+                color: AppTheme.textPrimary,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
@@ -211,7 +211,7 @@ class _DetailRow extends StatelessWidget {
               Text(
                 value,
                 style: const TextStyle(
-                  color: AppTheme.white,
+                  color: AppTheme.textPrimary,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),

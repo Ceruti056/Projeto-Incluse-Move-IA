@@ -218,7 +218,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    style: const TextStyle(color: AppTheme.white, fontSize: 15),
+                    style: const TextStyle(color: AppTheme.textPrimary, fontSize: 15),
                     maxLines: 4,
                     minLines: 1,
                     textCapitalization: TextCapitalization.sentences,
@@ -314,7 +314,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               'Olá! Sou o Assistente InclusI 🤖',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppTheme.white,
+                color: AppTheme.textPrimary,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),

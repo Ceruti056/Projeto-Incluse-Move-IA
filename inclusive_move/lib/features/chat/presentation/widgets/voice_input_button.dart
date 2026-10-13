@@ -26,11 +26,11 @@ class VoiceInputButton extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isListening
-              ? AppTheme.error.withOpacity(0.2)
-              : AppTheme.surfaceNavyLight,
+              ? AppTheme.error.withOpacity(0.15)
+              : AppTheme.surfaceBorderLight,
           shape: BoxShape.circle,
           border: Border.all(
-            color: isListening ? AppTheme.error : AppTheme.surfaceNavyLight,
+            color: isListening ? AppTheme.error : AppTheme.surfaceBorder,
             width: 1.5,
           ),
         ),

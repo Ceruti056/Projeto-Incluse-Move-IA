@@ -25,29 +25,18 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
     zoom: 14,
   );
 
-  // Estilo de mapa escuro para combinar com o dark mode
-  static const String _darkMapStyle = '''
-  [
-    {"elementType": "geometry", "stylers": [{"color": "#0D1B3E"}]},
-    {"elementType": "labels.text.fill", "stylers": [{"color": "#B0BEC5"}]},
-    {"elementType": "labels.text.stroke", "stylers": [{"color": "#0D1B3E"}]},
-    {"featureType": "road", "elementType": "geometry", "stylers": [{"color": "#1A2B52"}]},
-    {"featureType": "water", "elementType": "geometry", "stylers": [{"color": "#0A1628"}]}
-  ]
-  ''';
-
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 180,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppTheme.surfaceNavyLight, width: 1),
+        border: Border.all(color: AppTheme.surfaceBorder, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withOpacity(0.06),
             blurRadius: 16,
-            offset: const Offset(0, 8),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -64,28 +53,7 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
             compassEnabled: false,
             onMapCreated: (controller) {
               _mapController = controller;
-              controller.setMapStyle(_darkMapStyle);
             },
-          ),
-
-          // Overlay gradiente na parte inferior
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    AppTheme.backgroundNavy.withOpacity(0.8),
-                  ],
-                ),
-              ),
-            ),
           ),
 
           // Botão de localização
@@ -93,16 +61,26 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
             top: 12,
             right: 12,
             child: GestureDetector(
-              onTap: () {/* TODO: centralizar no usuário */},
+              onTap: () {
+                _mapController?.animateCamera(
+                  CameraUpdate.newCameraPosition(_initialPosition),
+                );
+              },
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppTheme.surfaceNavy.withOpacity(0.9),
+                  color: AppTheme.surfaceWhite,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: AppTheme.surfaceNavyLight,
+                    color: AppTheme.surfaceBorder,
                     width: 1,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 8,
+                    ),
+                  ],
                 ),
                 child: const Icon(
                   Icons.my_location_rounded,
@@ -113,27 +91,42 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
             ),
           ),
 
-          // Label "Sua localização"
-          const Positioned(
-            bottom: 14,
-            left: 16,
-            child: Row(
-              children: [
-                Icon(
-                  Icons.location_on_rounded,
-                  color: AppTheme.primaryOrange,
-                  size: 16,
-                ),
-                SizedBox(width: 4),
-                Text(
-                  'Sua localização atual',
-                  style: TextStyle(
-                    color: AppTheme.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+          // Label "Sua localização" em card pill elegante
+          Positioned(
+            bottom: 12,
+            left: 14,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceWhite.withOpacity(0.95),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppTheme.surfaceBorder),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: const Row(
+                children: [
+                  Icon(
+                    Icons.location_on_rounded,
+                    color: AppTheme.primaryOrange,
+                    size: 16,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    'Sua localização atual',
+                    style: TextStyle(
+                      color: AppTheme.textPrimary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

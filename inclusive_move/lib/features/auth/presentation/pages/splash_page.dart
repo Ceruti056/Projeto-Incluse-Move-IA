@@ -1,8 +1,8 @@
 // ============================================================================
 // features/auth/presentation/pages/splash_page.dart - Tela de Splash
 // ============================================================================
-// Tela de entrada animada com logo, nome e tagline do app.
-// Verifica estado de autenticação e redireciona automaticamente.
+// Tela de entrada com fundo branco luminoso, logotipo refinado, animações suaves
+// e verificação automática de autenticação.
 // ============================================================================
 
 import 'package:flutter/material.dart';
@@ -26,8 +26,8 @@ class _SplashPageState extends ConsumerState<SplashPage>
   @override
   void initState() {
     super.initState();
-    // Navega após a animação (2,5 segundos)
-    Future.delayed(const Duration(milliseconds: 2500), () {
+    // Navega suavemente após a exibição e verificação de autenticação
+    Future.delayed(const Duration(milliseconds: 2600), () {
       if (!mounted) return;
       final auth = ref.read(authStateProvider);
       auth.when(
@@ -47,166 +47,276 @@ class _SplashPageState extends ConsumerState<SplashPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.backgroundNavy,
-      body: Container(
-        // Gradiente de fundo
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0A1628),
-              AppTheme.backgroundNavy,
-              Color(0xFF1A2B52),
-            ],
-            stops: [0.0, 0.5, 1.0],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(flex: 2),
-
-              // ── Logo animado ───────────────────────────────────────────────
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      AppTheme.primaryOrange.withOpacity(0.3),
-                      AppTheme.primaryOrange.withOpacity(0.0),
-                    ],
-                  ),
-                ),
-                child: Center(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // Ícone de localização atrás
-                      const Icon(
-                        Icons.location_on_rounded,
-                        size: 80,
-                        color: AppTheme.primaryOrange,
-                      ),
-                      // Ícone de acessibilidade sobreposto
-                      Positioned(
-                        bottom: 8,
-                        left: 8,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: AppTheme.backgroundNavy,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.accessible_rounded,
-                            size: 28,
-                            color: AppTheme.primaryOrange,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-                  .animate()
-                  .scale(
-                    duration: 800.ms,
-                    curve: Curves.elasticOut,
-                    begin: const Offset(0.3, 0.3),
-                  )
-                  .fadeIn(duration: 600.ms),
-
-              const SizedBox(height: 32),
-
-              // ── Nome do App ────────────────────────────────────────────────
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Inclus',
-                      style: TextStyle(
-                        fontSize: 38,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.white,
-                        letterSpacing: -1,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'I',
-                      style: TextStyle(
-                        fontSize: 38,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.primaryOrange,
-                        letterSpacing: -1,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Move',
-                      style: TextStyle(
-                        fontSize: 38,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.white,
-                        letterSpacing: -1,
-                      ),
-                    ),
+      backgroundColor: AppTheme.white,
+      body: Stack(
+        children: [
+          // ── Fundo Branco com Brilho Ambiente Suave ─────────────────────────
+          Positioned(
+            top: -120,
+            right: -80,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    AppTheme.primaryOrange.withOpacity(0.08),
+                    AppTheme.white.withOpacity(0.0),
                   ],
                 ),
-              )
-                  .animate(delay: 400.ms)
-                  .fadeIn(duration: 600.ms)
-                  .slideY(begin: 0.3, end: 0),
-
-              const SizedBox(height: 10),
-
-              // ── Tagline ────────────────────────────────────────────────────
-              const Text(
-                'Mobilidade com dignidade',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppTheme.textSecondary,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -100,
+            left: -80,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    AppTheme.primaryOrange.withOpacity(0.06),
+                    AppTheme.white.withOpacity(0.0),
+                  ],
                 ),
-              )
-                  .animate(delay: 700.ms)
-                  .fadeIn(duration: 600.ms)
-                  .slideY(begin: 0.3, end: 0),
+              ),
+            ),
+          ),
 
-              const Spacer(flex: 2),
-
-              // ── Indicador de carregamento ──────────────────────────────────
-              Column(
+          SafeArea(
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: CircularProgressIndicator(
-                      color: AppTheme.primaryOrange,
-                      strokeWidth: 3,
+                  const Spacer(flex: 3),
+
+                  // ── Logo Central com Camadas e Sombra Premium ──────────────
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Pulso sutil de fundo
+                      Container(
+                        width: 136,
+                        height: 136,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppTheme.primaryOrange.withOpacity(0.1),
+                        ),
+                      )
+                          .animate(
+                            onPlay: (controller) => controller.repeat(reverse: true),
+                          )
+                          .scale(
+                            begin: const Offset(0.9, 0.9),
+                            end: const Offset(1.15, 1.15),
+                            duration: 1800.ms,
+                            curve: Curves.easeInOut,
+                          ),
+
+                      // Card circular do emblema
+                      Container(
+                        width: 108,
+                        height: 108,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppTheme.primaryOrange,
+                              AppTheme.primaryOrangeDark,
+                            ],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppTheme.primaryOrange.withOpacity(0.35),
+                              blurRadius: 28,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              // Ícone de pin de rota
+                              Icon(
+                                Icons.location_on_rounded,
+                                size: 58,
+                                color: AppTheme.white.withOpacity(0.28),
+                              ),
+                              // Ícone principal de acessibilidade
+                              const Icon(
+                                Icons.accessible_forward_rounded,
+                                size: 48,
+                                color: AppTheme.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                          .animate()
+                          .scale(
+                            duration: 850.ms,
+                            curve: Curves.elasticOut,
+                            begin: const Offset(0.3, 0.3),
+                          )
+                          .fadeIn(duration: 600.ms),
+                    ],
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // ── Título da Marca (Tipografia Alta Definição) ────────────
+                  RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Inclus',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.w900,
+                            color: AppTheme.textPrimary,
+                            letterSpacing: -1,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'I',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.w900,
+                            color: AppTheme.primaryOrange,
+                            letterSpacing: -1,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Move',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.w900,
+                            color: AppTheme.textPrimary,
+                            letterSpacing: -1,
+                          ),
+                        ),
+                      ],
                     ),
                   )
-                      .animate(delay: 1000.ms)
-                      .fadeIn(duration: 500.ms)
-                      .scale(begin: const Offset(0.5, 0.5)),
-                  const SizedBox(height: 16),
+                      .animate(delay: 300.ms)
+                      .fadeIn(duration: 600.ms)
+                      .slideY(begin: 0.25, end: 0, curve: Curves.easeOutCubic),
+
+                  const SizedBox(height: 8),
+
+                  // ── Tagline ────────────────────────────────────────────────
                   const Text(
-                    'Carregando...',
+                    'Mobilidade com dignidade',
                     style: TextStyle(
+                      fontSize: 16,
                       color: AppTheme.textSecondary,
-                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.3,
+                    ),
+                  )
+                      .animate(delay: 500.ms)
+                      .fadeIn(duration: 600.ms)
+                      .slideY(begin: 0.2, end: 0),
+
+                  const SizedBox(height: 16),
+
+                  // ── Badge de Especialidade ─────────────────────────────────
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryOrangeLight,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: AppTheme.primaryOrange.withOpacity(0.25),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(
+                          Icons.verified_rounded,
+                          size: 14,
+                          color: AppTheme.primaryOrange,
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          'Transporte Especializado & Acessível',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.primaryOrangeDark,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                      .animate(delay: 700.ms)
+                      .fadeIn(duration: 500.ms)
+                      .scale(begin: const Offset(0.85, 0.85)),
+
+                  const Spacer(flex: 3),
+
+                  // ── Indicador de Carregamento ──────────────────────────────
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 34,
+                        height: 34,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            AppTheme.primaryOrange,
+                          ),
+                          backgroundColor: AppTheme.surfaceBorder,
+                        ),
+                      )
+                          .animate(delay: 800.ms)
+                          .fadeIn(duration: 400.ms)
+                          .scale(begin: const Offset(0.6, 0.6)),
+                      const SizedBox(height: 14),
+                      const Text(
+                        'Carregando com segurança...',
+                        style: TextStyle(
+                          color: AppTheme.textTertiary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ).animate(delay: 900.ms).fadeIn(duration: 400.ms),
+                    ],
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // ── Rodapé Sutil ───────────────────────────────────────────
+                  const Text(
+                    'InclusIMove • Mobilidade para Todos',
+                    style: TextStyle(
+                      color: AppTheme.textTertiary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 0.4,
                     ),
                   ).animate(delay: 1100.ms).fadeIn(duration: 400.ms),
+
+                  const SizedBox(height: 16),
                 ],
               ),
-
-              const SizedBox(height: 48),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

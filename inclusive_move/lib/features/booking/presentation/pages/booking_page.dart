@@ -283,7 +283,7 @@ class _SectionTitle extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w700,
-        color: AppTheme.white,
+        color: AppTheme.textPrimary,
       ),
     );
   }
@@ -308,7 +308,7 @@ class _LocationField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style: const TextStyle(color: AppTheme.white, fontSize: 15),
+      style: const TextStyle(color: AppTheme.textPrimary, fontSize: 15),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
@@ -362,7 +362,7 @@ class _PickerButton extends StatelessWidget {
               child: Text(
                 label,
                 style: const TextStyle(
-                  color: AppTheme.white,
+                  color: AppTheme.textPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
@@ -420,7 +420,7 @@ class _VehicleTypeCard extends StatelessWidget {
               label,
               style: TextStyle(
                 color:
-                    isSelected ? AppTheme.primaryOrange : AppTheme.white,
+                    isSelected ? AppTheme.primaryOrange : AppTheme.textPrimary,
                 fontWeight: FontWeight.w700,
                 fontSize: 12,
               ),
@@ -477,7 +477,7 @@ class _CheckboxTile extends StatelessWidget {
               child: Text(
                 title,
                 style: const TextStyle(
-                  color: AppTheme.white,
+                  color: AppTheme.textPrimary,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),

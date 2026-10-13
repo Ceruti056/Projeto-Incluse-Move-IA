@@ -79,7 +79,7 @@ class TripCard extends StatelessWidget {
                   Text(
                     time,
                     style: const TextStyle(
-                      color: AppTheme.white,
+                      color: AppTheme.textPrimary,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),

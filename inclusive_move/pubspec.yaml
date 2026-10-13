@@ -43,7 +43,7 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
 
   # ── Voz e Acessibilidade ─────────────────────────────────────────────────────
-  speech_to_text: ^6.6.2
+  speech_to_text: ^7.0.0
   flutter_tts: ^4.0.2
 
   # ── HTTP / API (Grok AI) ──────────────────────────────────────────────────────

@@ -85,7 +85,7 @@ class ChatBubble extends StatelessWidget {
                   child: Text(
                     message.content,
                     style: TextStyle(
-                      color: _isUser ? AppTheme.white : AppTheme.white,
+                      color: _isUser ? AppTheme.white : AppTheme.textPrimary,
                       fontSize: 15,
                       height: 1.5,
                     ),

@@ -32,11 +32,17 @@ class _TrackingPageState extends State<TrackingPage> {
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppTheme.surfaceNavy.withOpacity(0.9),
+            color: AppTheme.surfaceWhite,
             shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+              ),
+            ],
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.white),
+            icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -145,7 +151,7 @@ class _TrackingPageState extends State<TrackingPage> {
                             Text(
                               'Carlos Silva',
                               style: TextStyle(
-                                color: AppTheme.white,
+                                color: AppTheme.textPrimary,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
                               ),

@@ -83,7 +83,7 @@ class ProfilePage extends ConsumerWidget {
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: AppTheme.white,
+                    color: AppTheme.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -303,7 +303,7 @@ class _ProfileItem extends StatelessWidget {
       title: Text(
         label,
         style: const TextStyle(
-          color: AppTheme.white,
+          color: AppTheme.textPrimary,
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),

@@ -13,20 +13,20 @@ final themeModeProvider =
 });
 
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {
-  ThemeModeNotifier() : super(ThemeMode.dark) {
+  ThemeModeNotifier() : super(ThemeMode.light) {
     _loadTheme();
   }
 
   static const _key = 'theme_mode';
 
-  /// Carrega o tema salvo nas preferências locais
+  /// Carrega o tema salvo nas preferências locais (padrão: tema claro / branco)
   Future<void> _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
     final stored = prefs.getString(_key);
-    if (stored == 'light') {
-      state = ThemeMode.light;
+    if (stored == 'dark') {
+      state = ThemeMode.dark;
     } else {
-      state = ThemeMode.dark; // padrão: dark mode
+      state = ThemeMode.light; // padrão: modo claro com branco como cor principal
     }
   }
 

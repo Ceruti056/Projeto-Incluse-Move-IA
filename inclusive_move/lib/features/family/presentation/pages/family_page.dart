@@ -78,7 +78,7 @@ class FamilyPage extends StatelessWidget {
             const Text(
               'Contatos Cadastrados',
               style: TextStyle(
-                color: AppTheme.white,
+                color: AppTheme.textPrimary,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
@@ -121,7 +121,7 @@ class FamilyPage extends StatelessWidget {
                       Text(
                         'Mensagem em massa',
                         style: TextStyle(
-                          color: AppTheme.white,
+                          color: AppTheme.textPrimary,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,
                         ),
@@ -211,7 +211,7 @@ class _ContactCard extends StatelessWidget {
                     Text(
                       contact['name'] as String,
                       style: const TextStyle(
-                        color: AppTheme.white,
+                        color: AppTheme.textPrimary,
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),

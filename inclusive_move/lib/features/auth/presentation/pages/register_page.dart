@@ -241,7 +241,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       width: 1.5,
                     ),
                     labelStyle: TextStyle(
-                      color: isSelected ? AppTheme.primaryOrange : AppTheme.white,
+                      color: isSelected ? AppTheme.primaryOrange : AppTheme.textPrimary,
                       fontWeight: isSelected
                           ? FontWeight.w600
                           : FontWeight.w400,

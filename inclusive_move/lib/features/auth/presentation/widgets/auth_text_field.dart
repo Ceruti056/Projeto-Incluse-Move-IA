@@ -43,7 +43,7 @@ class AuthTextField extends StatelessWidget {
       textCapitalization: textCapitalization,
       maxLines: maxLines,
       style: const TextStyle(
-        color: AppTheme.white,
+        color: AppTheme.textPrimary,
         fontSize: 16,
         fontWeight: FontWeight.w400,
       ),

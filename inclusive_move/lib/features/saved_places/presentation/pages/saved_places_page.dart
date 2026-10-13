@@ -57,7 +57,7 @@ class _SavedPlacesPageState extends State<SavedPlacesPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
             child: TextField(
-              style: const TextStyle(color: AppTheme.white),
+              style: const TextStyle(color: AppTheme.textPrimary),
               decoration: InputDecoration(
                 hintText: 'Buscar destino...',
                 prefixIcon: const Icon(Icons.search_rounded),
@@ -132,7 +132,7 @@ class _PlaceCard extends StatelessWidget {
                 Text(
                   place['name'] as String,
                   style: const TextStyle(
-                    color: AppTheme.white,
+                    color: AppTheme.textPrimary,
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
                   ),
