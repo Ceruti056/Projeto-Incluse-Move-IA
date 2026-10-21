@@ -216,7 +216,7 @@ class AppTheme {
         suffixIconColor: textSecondary,
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: surfaceWhite,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -437,7 +437,7 @@ class AppTheme {
         suffixIconColor: const Color(0xFF94A3B8),
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: const Color(0xFF1E293B),
         elevation: 0,
         shape: RoundedRectangleBorder(

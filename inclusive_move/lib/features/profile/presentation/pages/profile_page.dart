@@ -18,11 +18,12 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
+    final isGuest = ref.watch(isGuestModeProvider);
     final themeNotifier = ref.read(themeModeProvider.notifier);
     final isDark = ref.watch(themeModeProvider.notifier).isDark;
 
-    final name = user?.displayName ?? 'Usuário';
-    final email = user?.email ?? '--';
+    final name = isGuest ? 'Convidado (Modo Teste)' : (user?.displayName ?? 'Usuário');
+    final email = isGuest ? 'teste@inclusimove.app' : (user?.email ?? '--');
     final initial = name.isNotEmpty ? name[0].toUpperCase() : '?';
 
     return Scaffold(
@@ -206,6 +207,7 @@ class ProfilePage extends ConsumerWidget {
                   foregroundColor: AppTheme.error,
                 ),
                 onPressed: () async {
+                  ref.read(isGuestModeProvider.notifier).state = false;
                   await ref.read(authFormProvider.notifier).signOut();
                   if (context.mounted) context.go(AppRoutes.login);
                 },

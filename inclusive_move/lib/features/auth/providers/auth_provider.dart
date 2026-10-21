@@ -46,6 +46,9 @@ final currentUserProvider = Provider<User?>((ref) {
   return ref.watch(authStateProvider).valueOrNull;
 });
 
+/// Flag para Modo Convidado / Modo de Teste
+final isGuestModeProvider = StateProvider<bool>((ref) => false);
+
 // ── Notifier de Formulário de Auth ────────────────────────────────────────────
 
 /// Estado da operação de autenticação (login/cadastro)

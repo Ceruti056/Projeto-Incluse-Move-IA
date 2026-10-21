@@ -22,7 +22,10 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
-    final firstName = user?.displayName?.split(' ').first ?? 'Usuário';
+    final isGuest = ref.watch(isGuestModeProvider);
+    final firstName = isGuest
+        ? 'Convidado'
+        : (user?.displayName?.split(' ').first ?? 'Usuário');
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundNavy,

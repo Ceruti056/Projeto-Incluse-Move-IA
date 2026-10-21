@@ -249,6 +249,38 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                   ).animate(delay: 550.ms).fadeIn().slideY(begin: 0.1),
 
+                  const SizedBox(height: 14),
+
+                  // Botão Modo Teste (Sem cadastro)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.explore_outlined, color: AppTheme.primaryOrange),
+                      label: const Text(
+                        'Acessar em Modo Teste (Sem cadastro)',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.primaryOrange,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                          color: AppTheme.primaryOrange.withOpacity(0.6),
+                          width: 1.5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      onPressed: () {
+                        ref.read(isGuestModeProvider.notifier).state = true;
+                        context.go(AppRoutes.home);
+                      },
+                    ),
+                  ).animate(delay: 575.ms).fadeIn().slideY(begin: 0.1),
+
                   const SizedBox(height: 24),
 
                   // Divisor
