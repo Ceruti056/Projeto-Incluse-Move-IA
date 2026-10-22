@@ -1,0 +1,16 @@
+services:
+  inclusive_move:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: inclusive_move:latest
+    container_name: inclusive_move
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
