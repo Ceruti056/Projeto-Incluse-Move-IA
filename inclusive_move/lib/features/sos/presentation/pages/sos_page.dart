@@ -75,7 +75,8 @@ class _SosPageState extends ConsumerState<SosPage>
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
+          icon:
+              const Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
@@ -102,8 +103,8 @@ class _SosPageState extends ConsumerState<SosPage>
                     height: 180 + (_pulseController.value * 20),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppTheme.error
-                          .withOpacity(0.1 + _pulseController.value * 0.1),
+                      color: AppTheme.error.withValues(
+                          alpha: 0.1 + _pulseController.value * 0.1),
                     ),
                     child: child,
                   );
@@ -181,10 +182,11 @@ class _SosPageState extends ConsumerState<SosPage>
                       icon: _alertSent
                           ? Icons.check_rounded
                           : Icons.notifications_active_rounded,
-                      label: _alertSent
-                          ? 'Alerta\nEnviado!'
-                          : 'Alertar\nFamília',
-                      color: _alertSent ? AppTheme.success : const Color(0xFF9C27B0),
+                      label:
+                          _alertSent ? 'Alerta\nEnviado!' : 'Alertar\nFamília',
+                      color: _alertSent
+                          ? AppTheme.success
+                          : const Color(0xFF9C27B0),
                       onTap: _alertSent ? () {} : _sendFamilyAlert,
                     ),
                   ),
@@ -197,10 +199,10 @@ class _SosPageState extends ConsumerState<SosPage>
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppTheme.surfaceNavy.withOpacity(0.5),
+                  color: AppTheme.surfaceNavy.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: AppTheme.error.withOpacity(0.3),
+                    color: AppTheme.error.withValues(alpha: 0.3),
                   ),
                 ),
                 child: const Row(
@@ -265,9 +267,9 @@ class _EmergencyButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.15),
+          color: color.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: color.withOpacity(0.4), width: 2),
+          border: Border.all(color: color.withValues(alpha: 0.4), width: 2),
         ),
         child: Column(
           children: [

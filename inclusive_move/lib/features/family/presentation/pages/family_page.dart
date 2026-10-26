@@ -45,10 +45,10 @@ class FamilyPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppTheme.primaryOrange.withOpacity(0.1),
+                color: AppTheme.primaryOrange.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                  color: AppTheme.primaryOrange.withOpacity(0.3),
+                  color: AppTheme.primaryOrange.withValues(alpha: 0.3),
                 ),
               ),
               child: const Row(
@@ -182,7 +182,7 @@ class _ContactCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: isEmergency
-              ? AppTheme.error.withOpacity(0.3)
+              ? AppTheme.error.withValues(alpha: 0.3)
               : AppTheme.surfaceNavyLight,
         ),
       ),
@@ -191,7 +191,7 @@ class _ContactCard extends StatelessWidget {
           // Avatar
           CircleAvatar(
             radius: 24,
-            backgroundColor: AppTheme.primaryOrange.withOpacity(0.15),
+            backgroundColor: AppTheme.primaryOrange.withValues(alpha: 0.15),
             child: Text(
               (contact['name'] as String)[0],
               style: const TextStyle(
@@ -224,7 +224,7 @@ class _ContactCard extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: AppTheme.error.withOpacity(0.15),
+                          color: AppTheme.error.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: const Text(

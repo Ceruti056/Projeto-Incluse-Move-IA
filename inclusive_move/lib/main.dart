@@ -19,12 +19,20 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Inicializa o Firebase com as opções geradas pelo FlutterFire CLI
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    debugPrint('Aviso: Firebase não pôde ser inicializado nesta plataforma: $e');
+  }
 
   // Configura notificações locais
-  await NotificationService.initialize();
+  try {
+    await NotificationService.initialize();
+  } catch (e) {
+    debugPrint('Aviso: Notificações não puderam ser inicializadas nesta plataforma: $e');
+  }
 
   // Força orientação retrato para melhor acessibilidade
   await SystemChrome.setPreferredOrientations([

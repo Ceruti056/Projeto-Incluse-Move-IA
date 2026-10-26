@@ -12,7 +12,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
-import '../../providers/auth_provider.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
@@ -26,21 +25,10 @@ class _SplashPageState extends ConsumerState<SplashPage>
   @override
   void initState() {
     super.initState();
-    // Navega suavemente após a exibição e verificação de autenticação
+    // Navega suavemente após a exibição direto para a home
     Future.delayed(const Duration(milliseconds: 2600), () {
       if (!mounted) return;
-      final auth = ref.read(authStateProvider);
-      auth.when(
-        data: (user) {
-          if (user != null) {
-            context.go(AppRoutes.home);
-          } else {
-            context.go(AppRoutes.login);
-          }
-        },
-        loading: () => context.go(AppRoutes.login),
-        error: (_, __) => context.go(AppRoutes.login),
-      );
+      context.go(AppRoutes.home);
     });
   }
 

@@ -22,10 +22,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
-    final isGuest = ref.watch(isGuestModeProvider);
-    final firstName = isGuest
-        ? 'Convidado'
-        : (user?.displayName?.split(' ').first ?? 'Usuário');
+    final firstName = user?.displayName?.split(' ').first ?? 'Usuário';
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundNavy,
@@ -72,7 +69,7 @@ class HomePage extends ConsumerWidget {
                     child: CircleAvatar(
                       radius: 20,
                       backgroundColor:
-                          AppTheme.primaryOrange.withOpacity(0.2),
+                          AppTheme.primaryOrange.withValues(alpha: 0.2),
                       child: user?.photoURL != null
                           ? ClipOval(
                               child: Image.network(
@@ -207,9 +204,7 @@ class HomePage extends ConsumerWidget {
                 const SizedBox(height: 10),
 
                 // Estado vazio (sem viagens)
-                const _EmptyTripsHint()
-                    .animate(delay: 500.ms)
-                    .fadeIn(),
+                const _EmptyTripsHint().animate(delay: 500.ms).fadeIn(),
               ]),
             ),
           ),
@@ -228,13 +223,13 @@ class _SupportCallButton extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppTheme.primaryOrange.withOpacity(0.15),
-            AppTheme.primaryOrange.withOpacity(0.05),
+            AppTheme.primaryOrange.withValues(alpha: 0.15),
+            AppTheme.primaryOrange.withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppTheme.primaryOrange.withOpacity(0.3),
+          color: AppTheme.primaryOrange.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -253,11 +248,11 @@ class _SupportCallButton extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Precisa de ajuda?',
                   style: TextStyle(
                     color: AppTheme.textPrimary,
@@ -265,7 +260,7 @@ class _SupportCallButton extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   'Ligue para o suporte agora',
                   style: TextStyle(
@@ -298,19 +293,19 @@ class _EmptyTripsHint extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppTheme.surfaceBorder, width: 1),
       ),
-      child: Row(
+      child: const Row(
         children: [
           Icon(
             Icons.directions_car_outlined,
             color: AppTheme.textSecondary,
             size: 32,
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Sem viagens próximas',
                   style: TextStyle(
                     color: AppTheme.textPrimary,
@@ -318,7 +313,7 @@ class _EmptyTripsHint extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   'Agende sua primeira corrida tocando em "Agendar Corrida"',
                   style: TextStyle(

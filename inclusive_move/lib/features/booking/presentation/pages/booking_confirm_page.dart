@@ -34,7 +34,7 @@ class BookingConfirmPage extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppTheme.success.withOpacity(0.15),
+                color: AppTheme.success.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -109,7 +109,7 @@ class BookingConfirmPage extends StatelessWidget {
                   ),
                   if (bookingData['needsWheelchair'] == true) ...[
                     const Divider(color: AppTheme.surfaceNavyLight, height: 24),
-                    _DetailRow(
+                    const _DetailRow(
                       icon: Icons.accessible_rounded,
                       iconColor: AppTheme.primaryOrange,
                       label: 'Acessibilidade',
@@ -189,7 +189,7 @@ class _DetailRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.1),
+            color: iconColor.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(icon, color: iconColor, size: 18),

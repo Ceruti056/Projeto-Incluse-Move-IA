@@ -27,7 +27,6 @@ import '../layout/main_shell.dart';
 final appRouterProvider = Provider<GoRouter>((ref) {
   // Notifier reativo: redireciona quando o estado de auth muda
   final authState = ref.watch(authStateProvider);
-  final isGuest = ref.watch(isGuestModeProvider);
 
   return GoRouter(
     initialLocation: AppRoutes.splash,
@@ -38,16 +37,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final isLoading = authState.isLoading;
       if (isLoading) return null; // aguarda carregamento
 
-      final isAuthenticated = (authState.valueOrNull != null) || isGuest;
+      final isAuthenticated = authState.valueOrNull != null;
       final isSplash = state.matchedLocation == AppRoutes.splash;
       final isAuthRoute = state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.register;
 
       // Na splash não redireciona — ela trata isso internamente
       if (isSplash) return null;
-
-      // Se não autenticado e tentando acessar rota protegida → login
-      if (!isAuthenticated && !isAuthRoute) return AppRoutes.login;
 
       // Se autenticado e na tela de auth → home
       if (isAuthenticated && isAuthRoute) return AppRoutes.home;

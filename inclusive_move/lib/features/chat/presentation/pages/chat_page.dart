@@ -123,7 +123,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppTheme.primaryOrange.withOpacity(0.15),
+                color: AppTheme.primaryOrange.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -158,12 +158,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           IconButton(
             icon: const Icon(Icons.delete_outline_rounded),
             tooltip: 'Limpar conversa',
-            onPressed: () =>
-                ref.read(chatProvider.notifier).clearMessages(),
+            onPressed: () => ref.read(chatProvider.notifier).clearMessages(),
           ),
         ],
       ),
-
       body: Column(
         children: [
           // ── Lista de mensagens ───────────────────────────────────────────
@@ -198,9 +196,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               16,
               MediaQuery.of(context).padding.bottom + 12,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.surfaceNavy,
-              border: const Border(
+              border: Border(
                 top: BorderSide(color: AppTheme.surfaceNavyLight, width: 1),
               ),
             ),
@@ -218,7 +216,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    style: const TextStyle(color: AppTheme.textPrimary, fontSize: 15),
+                    style: const TextStyle(
+                        color: AppTheme.textPrimary, fontSize: 15),
                     maxLines: 4,
                     minLines: 1,
                     textCapitalization: TextCapitalization.sentences,
@@ -301,9 +300,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               Icons.smart_toy_outlined,
               size: 72,
               color: AppTheme.primaryOrange,
-            )
-                .animate(onPlay: (c) => c.repeat(reverse: true))
-                .scale(
+            ).animate(onPlay: (c) => c.repeat(reverse: true)).scale(
                   begin: const Offset(1.0, 1.0),
                   end: const Offset(1.08, 1.08),
                   duration: 2.seconds,
@@ -356,7 +353,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                           color: AppTheme.surfaceNavy,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: AppTheme.primaryOrange.withOpacity(0.4),
+                            color:
+                                AppTheme.primaryOrange.withValues(alpha: 0.4),
                           ),
                         ),
                         child: Text(
@@ -394,7 +392,7 @@ class _TypingIndicator extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: AppTheme.primaryOrange.withOpacity(0.15),
+              color: AppTheme.primaryOrange.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
             child: const Icon(
