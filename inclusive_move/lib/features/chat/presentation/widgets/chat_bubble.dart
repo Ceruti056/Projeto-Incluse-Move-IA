@@ -30,7 +30,7 @@ class ChatBubble extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: AppTheme.primaryOrange.withOpacity(0.15),
+                color: AppTheme.primaryOrange.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -45,9 +45,8 @@ class ChatBubble extends StatelessWidget {
           // Conteúdo da bolha
           Flexible(
             child: Column(
-              crossAxisAlignment: _isUser
-                  ? CrossAxisAlignment.end
-                  : CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  _isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -55,9 +54,8 @@ class ChatBubble extends StatelessWidget {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: _isUser
-                        ? AppTheme.primaryOrange
-                        : AppTheme.surfaceNavy,
+                    color:
+                        _isUser ? AppTheme.primaryOrange : AppTheme.surfaceNavy,
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(18),
                       topRight: const Radius.circular(18),
@@ -73,10 +71,8 @@ class ChatBubble extends StatelessWidget {
                         : null,
                     boxShadow: [
                       BoxShadow(
-                        color: (_isUser
-                                ? AppTheme.primaryOrange
-                                : Colors.black)
-                            .withOpacity(0.15),
+                        color: (_isUser ? AppTheme.primaryOrange : Colors.black)
+                            .withValues(alpha: 0.15),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),

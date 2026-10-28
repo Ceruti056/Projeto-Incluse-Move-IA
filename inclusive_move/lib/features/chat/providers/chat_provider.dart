@@ -1,8 +1,8 @@
 // ============================================================================
-// features/chat/providers/chat_provider.dart - Provider do Chat com Grok AI
+// features/chat/providers/chat_provider.dart - Provider do Chat com Groq Cloud AI
 // ============================================================================
-// Integra a API Grok (xAI) para o assistente conversacional.
-// Documentação: https://docs.x.ai/api
+// Integra a API Groq Cloud (Llama 3.3 70B Versatile) para o assistente conversacional.
+// Documentação: https://console.groq.com/docs/overview
 // ============================================================================
 
 import 'dart:convert';
@@ -58,11 +58,32 @@ class ChatState {
 class ChatNotifier extends StateNotifier<ChatState> {
   ChatNotifier() : super(const ChatState());
 
-  /// Chave da API Grok (xAI) — substitua pela sua chave real
-  /// ⚠️  Em produção, use flutter_secure_storage ou variáveis de ambiente
-  static const String _apiKey = 'YOUR_GROK_API_KEY_HERE';
-  static const String _apiUrl = 'https://api.x.ai/v1/chat/completions';
-  static const String _model = 'grok-3-mini';
+  /// Chave da API Groq Cloud (https://console.groq.com/)
+  /// Suporta tanto GROQ_API_KEY quanto GROK_API_KEY para compatibilidade
+  static const String _envGroqKey = String.fromEnvironment('GROQ_API_KEY');
+  static const String _envGrokKey = String.fromEnvironment('GROK_API_KEY');
+
+  static String get _apiKey {
+    if (_envGroqKey.isNotEmpty && !_envGroqKey.startsWith('YOUR_')) {
+      return _envGroqKey;
+    }
+    if (_envGrokKey.isNotEmpty && !_envGrokKey.startsWith('YOUR_')) {
+      return _envGrokKey;
+    }
+    return '';
+  }
+
+  /// URL da API Groq Cloud
+  static const String _apiUrl = String.fromEnvironment(
+    'GROQ_API_URL',
+    defaultValue: 'https://api.groq.com/openai/v1/chat/completions',
+  );
+
+  /// Modelo padrão solicitado: Llama 3.3 70B Versatile
+  static const String _model = String.fromEnvironment(
+    'GROQ_MODEL',
+    defaultValue: 'llama-3.3-70b-versatile',
+  );
 
   /// System prompt que define o comportamento do assistente
   static const String _systemPrompt = '''
@@ -84,7 +105,7 @@ IMPORTANTE:
 - Não forneça informações médicas ou de saúde — recomende profissionais
 ''';
 
-  /// Envia uma mensagem e obtém resposta do Grok
+  /// Envia uma mensagem e obtém resposta do Groq Cloud (Llama 3.3 70B Versatile)
   Future<void> sendMessage(String userMessage) async {
     if (userMessage.trim().isEmpty) return;
 
@@ -102,6 +123,14 @@ IMPORTANTE:
       error: null,
     );
 
+    // Validação preventiva da chave da API
+    if (_apiKey.isEmpty) {
+      _handleError(
+        'Sua chave da API Groq ainda não foi configurada! Abra o arquivo .env e cole sua chave real (ex: gsk_...) no campo GROQ_API_KEY.',
+      );
+      return;
+    }
+
     try {
       // Monta o histórico de mensagens para contexto
       final messagesHistory = [
@@ -118,7 +147,7 @@ IMPORTANTE:
             ),
       ];
 
-      // Chamada à API Grok
+      // Chamada à API Groq Cloud (formato OpenAI-compatible)
       final response = await http.post(
         Uri.parse(_apiUrl),
         headers: {
@@ -128,17 +157,15 @@ IMPORTANTE:
         body: jsonEncode({
           'model': _model,
           'messages': messagesHistory,
-          'max_tokens': 600,
+          'max_tokens': 1024,
           'temperature': 0.7,
-          'stream': false,
         }),
       );
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final content =
-            data['choices'][0]['message']['content'] as String? ??
-                'Desculpe, não consegui entender. Tente novamente.';
+        final data = jsonDecode(utf8.decode(response.bodyBytes));
+        final content = data['choices'][0]['message']['content'] as String? ??
+            'Desculpe, não consegui entender. Tente novamente.';
 
         // Adiciona a resposta do assistente
         final assistantMsg = ChatMessage(
@@ -154,20 +181,31 @@ IMPORTANTE:
         );
       } else if (response.statusCode == 401) {
         _handleError(
-          'Chave de API inválida. Contate o suporte.',
+          'Chave da API Groq inválida. Verifique sua chave no arquivo .env (https://console.groq.com/keys).',
         );
       } else if (response.statusCode == 429) {
         _handleError(
-          'Muitas solicitações. Aguarde alguns segundos e tente novamente.',
+          'Limite de requisições excedido no Groq Cloud. Aguarde alguns instantes e tente novamente.',
         );
       } else {
-        _handleError(
-          'Erro ao conectar ao assistente. Tente novamente.',
-        );
+        String errorMessage =
+            'Erro ao conectar ao assistente (${response.statusCode}).';
+        try {
+          final errorData = jsonDecode(utf8.decode(response.bodyBytes));
+          if (errorData is Map) {
+            final err = errorData['error'];
+            if (err is Map && err['message'] != null) {
+              errorMessage = err['message'].toString();
+            } else if (err is String) {
+              errorMessage = err;
+            }
+          }
+        } catch (_) {}
+        _handleError(errorMessage);
       }
     } catch (e) {
       _handleError(
-        'Sem conexão com a internet. Verifique sua rede e tente novamente.',
+        'Erro de conexão com o assistente Groq. Verifique sua rede e tente novamente.',
       );
     }
   }

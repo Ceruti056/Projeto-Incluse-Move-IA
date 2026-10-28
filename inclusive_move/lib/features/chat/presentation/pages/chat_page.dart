@@ -1,7 +1,7 @@
 // ============================================================================
-// features/chat/presentation/pages/chat_page.dart - Chat com Grok AI
+// features/chat/presentation/pages/chat_page.dart - Chat com Groq Cloud AI
 // ============================================================================
-// Assistente de IA usando a API Grok (xAI) via HTTP.
+// Assistente de IA usando a API Groq Cloud (Llama 3.3 70B Versatile).
 // Suporta entrada por texto e por voz (speech_to_text).
 // ============================================================================
 
@@ -11,10 +11,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../providers/chat_provider.dart';
 import '../widgets/chat_bubble.dart';
 import '../widgets/voice_input_button.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key});
@@ -76,9 +78,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             TextPosition(offset: _messageController.text.length),
           );
         },
-        localeId: 'pt_BR',
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 3),
+        listenOptions: SpeechListenOptions(
+          listenMode: ListenMode.confirmation,
+          cancelOnError: true,
+          partialResults: true,
+          localeId: 'pt_BR',
+        ),
       );
     }
   }
@@ -166,26 +171,56 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         children: [
           // ── Lista de mensagens ───────────────────────────────────────────
           Expanded(
-            child: chatState.messages.isEmpty
-                ? _buildEmptyState()
-                : ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: chatState.messages.length +
-                        (chatState.isLoading ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (index == chatState.messages.length) {
-                        // Indicador de digitação
-                        return const _TypingIndicator();
-                      }
-                      final message = chatState.messages[index];
-                      return ChatBubble(message: message)
-                          .animate()
-                          .fadeIn(duration: 300.ms)
-                          .slideY(begin: 0.1, end: 0);
-                    },
+            child: Stack(
+              children: [
+                // ── Conteúdo das mensagens ─────────────────────────────────
+                Positioned.fill(
+                  child: chatState.messages.isEmpty
+                      ? _buildEmptyState()
+                      : ListView.builder(
+                          controller: _scrollController,
+                          // Padding inferior aumentado para que as últimas mensagens não fiquem sob o botão SOS
+                          padding: const EdgeInsets.fromLTRB(16, 8, 16, 72),
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: chatState.messages.length +
+                              (chatState.isLoading ? 1 : 0),
+                          itemBuilder: (context, index) {
+                            if (index == chatState.messages.length) {
+                              // Indicador de digitação
+                              return const _TypingIndicator();
+                            }
+                            final message = chatState.messages[index];
+                            return ChatBubble(message: message)
+                                .animate()
+                                .fadeIn(duration: 300.ms)
+                                .slideY(begin: 0.1, end: 0);
+                          },
+                        ),
+                ),
+
+                // ── Botão SOS flutuante no canto inferior direito (acima do input) ──
+                Positioned(
+                  right: 16,
+                  bottom: 12,
+                  child: FloatingActionButton.extended(
+                    heroTag: 'chat_sos_fab',
+                    onPressed: () => context.push(AppRoutes.sos),
+                    backgroundColor: AppTheme.error,
+                    foregroundColor: AppTheme.white,
+                    elevation: 6,
+                    icon: const Icon(Icons.emergency_rounded, size: 20),
+                    label: const Text(
+                      'SOS',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 13,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
                   ),
+                ),
+              ],
+            ),
           ),
 
           // ── Área de entrada ──────────────────────────────────────────────

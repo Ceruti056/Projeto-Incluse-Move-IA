@@ -34,7 +34,7 @@ class MainShell extends StatelessWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
               color: AppTheme.surfaceBorder,
@@ -70,18 +70,21 @@ class MainShell extends StatelessWidget {
         ),
       ),
 
-      // Botão SOS flutuante — sempre visível
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push(AppRoutes.sos),
-        backgroundColor: AppTheme.error,
-        foregroundColor: AppTheme.white,
-        elevation: 8,
-        icon: const Icon(Icons.emergency_rounded, size: 22),
-        label: const Text(
-          'SOS',
-          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
-        ),
-      ),
+      // Botão SOS flutuante — sempre visível, exceto na tela de chat onde é posicionado acima da área de digitação
+      floatingActionButton: selectedIndex == 2
+          ? null
+          : FloatingActionButton.extended(
+              heroTag: 'main_shell_sos_fab',
+              onPressed: () => context.push(AppRoutes.sos),
+              backgroundColor: AppTheme.error,
+              foregroundColor: AppTheme.white,
+              elevation: 8,
+              icon: const Icon(Icons.emergency_rounded, size: 22),
+              label: const Text(
+                'SOS',
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+              ),
+            ),
     );
   }
 
