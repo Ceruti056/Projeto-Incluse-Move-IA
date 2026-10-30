@@ -199,21 +199,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 Positioned(
                   right: 16,
                   bottom: 12,
-                  child: FloatingActionButton.extended(
+                  child: FloatingActionButton(
                     heroTag: 'chat_sos_fab',
+                    tooltip: 'Acionar emergência (SOS)',
                     onPressed: () => context.push(AppRoutes.sos),
                     backgroundColor: AppTheme.error,
                     foregroundColor: AppTheme.white,
                     elevation: 6,
-                    icon: const Icon(Icons.emergency_rounded, size: 20),
-                    label: const Text(
-                      'SOS',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
+                    child: const Icon(Icons.emergency_rounded, size: 22),
                   ),
                 ),
               ],

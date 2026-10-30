@@ -232,7 +232,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         }
                       });
                     },
-                    selectedColor: AppTheme.primaryOrange.withOpacity(0.2),
+                    selectedColor: AppTheme.primaryOrange.withValues(alpha: 0.2),
                     checkmarkColor: AppTheme.primaryOrange,
                     side: BorderSide(
                       color: isSelected

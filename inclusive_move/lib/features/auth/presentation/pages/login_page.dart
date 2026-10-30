@@ -91,12 +91,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             color: AppTheme.primaryOrangeLight,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: AppTheme.primaryOrange.withOpacity(0.35),
+                              color: AppTheme.primaryOrange.withValues(alpha: .35),
                               width: 2,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppTheme.primaryOrange.withOpacity(0.12),
+                                color: AppTheme.primaryOrange.withValues(alpha: .12),
                                 blurRadius: 16,
                                 offset: const Offset(0, 4),
                               ),
@@ -252,13 +252,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   const SizedBox(height: 24),
 
                   // Divisor
-                  Row(
+                  const Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Divider(color: AppTheme.surfaceNavyLight),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding:  EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
                           'ou',
                           style: TextStyle(
@@ -267,7 +267,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Divider(color: AppTheme.surfaceNavyLight),
                       ),
                     ],

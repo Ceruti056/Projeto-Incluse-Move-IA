@@ -84,7 +84,7 @@ class _BookingPageState extends ConsumerState<BookingPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Origem e Destino ────────────────────────────────────────────
-            _SectionTitle('Rota').animate(delay: 50.ms).fadeIn(),
+            const _SectionTitle('Rota').animate(delay: 50.ms).fadeIn(),
             const SizedBox(height: 12),
 
             // Origem
@@ -108,7 +108,7 @@ class _BookingPageState extends ConsumerState<BookingPage> {
                     width: 2,
                     height: 6,
                     margin: const EdgeInsets.symmetric(vertical: 2),
-                    color: AppTheme.textSecondary.withOpacity(0.3),
+                    color: AppTheme.textSecondary.withValues(alpha: 0.3),
                   ),
                 ),
               ),
@@ -128,7 +128,7 @@ class _BookingPageState extends ConsumerState<BookingPage> {
             const SizedBox(height: 20),
 
             // ── Data e Hora ──────────────────────────────────────────────────
-            _SectionTitle('Data e Hora').animate(delay: 200.ms).fadeIn(),
+            const _SectionTitle('Data e Hora').animate(delay: 200.ms).fadeIn(),
             const SizedBox(height: 12),
 
             Row(
@@ -158,7 +158,7 @@ class _BookingPageState extends ConsumerState<BookingPage> {
             const SizedBox(height: 20),
 
             // ── Tipo de Veículo ──────────────────────────────────────────────
-            _SectionTitle('Tipo de Veículo').animate(delay: 300.ms).fadeIn(),
+            const _SectionTitle('Tipo de Veículo').animate(delay: 300.ms).fadeIn(),
             const SizedBox(height: 12),
 
             Row(
@@ -198,7 +198,7 @@ class _BookingPageState extends ConsumerState<BookingPage> {
             const SizedBox(height: 20),
 
             // ── Necessidades Especiais ────────────────────────────────────────
-            _SectionTitle('Necessidades Especiais')
+            const _SectionTitle('Necessidades Especiais')
                 .animate(delay: 400.ms)
                 .fadeIn(),
             const SizedBox(height: 12),
@@ -400,7 +400,7 @@ class _VehicleTypeCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppTheme.primaryOrange.withOpacity(0.15)
+              ? AppTheme.primaryOrange.withValues(alpha: 0.15)
               : AppTheme.surfaceNavy,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
@@ -462,11 +462,11 @@ class _CheckboxTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
           color: value
-              ? AppTheme.primaryOrange.withOpacity(0.08)
+              ? AppTheme.primaryOrange.withValues(alpha: 0.08)
               : AppTheme.surfaceNavy,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: value ? AppTheme.primaryOrange.withOpacity(0.4) : AppTheme.surfaceNavyLight,
+            color: value ? AppTheme.primaryOrange.withValues(alpha: 0.4) : AppTheme.surfaceNavyLight,
           ),
         ),
         child: Row(

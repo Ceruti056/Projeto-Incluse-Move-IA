@@ -1,10 +1,3 @@
-// ============================================================================
-// features/chat/providers/chat_provider.dart - Provider do Chat com Groq Cloud AI
-// ============================================================================
-// Integra a API Groq Cloud (Llama 3.3 70B Versatile) para o assistente conversacional.
-// Documentação: https://console.groq.com/docs/overview
-// ============================================================================
-
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -202,7 +195,7 @@ IMPORTANTE:
         }
       } else if (streamedResponse.statusCode == 401) {
         _handleError(
-          'Chave da API Groq inválida. Verifique sua chave no arquivo .env (https://console.groq.com/keys).',
+          'O Groq rejeitou a chave da API (401)',
         );
       } else if (streamedResponse.statusCode == 429) {
         _handleError(

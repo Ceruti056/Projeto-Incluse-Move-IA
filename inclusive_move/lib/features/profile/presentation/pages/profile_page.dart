@@ -40,7 +40,7 @@ class ProfilePage extends ConsumerWidget {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor:
-                          AppTheme.primaryOrange.withOpacity(0.2),
+                          AppTheme.primaryOrange.withValues(alpha: 0.2),
                       child: user?.photoURL != null
                           ? ClipOval(
                               child: Image.network(
@@ -136,7 +136,7 @@ class ProfilePage extends ConsumerWidget {
                   label: 'Modo escuro',
                   trailing: Switch(
                     value: isDark,
-                    activeColor: AppTheme.primaryOrange,
+                    activeThumbColor: AppTheme.primaryOrange,
                     onChanged: (_) => themeNotifier.toggleTheme(),
                   ),
                   onTap: () => themeNotifier.toggleTheme(),
@@ -295,7 +295,7 @@ class _ProfileItem extends StatelessWidget {
       leading: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: AppTheme.primaryOrange.withOpacity(0.1),
+          color: AppTheme.primaryOrange.withValues(alpha: 0.1),
           shape: BoxShape.circle,
         ),
         child: Icon(icon, color: AppTheme.primaryOrange, size: 20),

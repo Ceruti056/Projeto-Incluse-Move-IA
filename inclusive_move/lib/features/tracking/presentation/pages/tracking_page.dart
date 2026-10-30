@@ -47,13 +47,14 @@ class _TrackingPageState extends State<TrackingPage> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 8,
               ),
             ],
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.textPrimary),
+            icon: const Icon(Icons.arrow_back_rounded,
+                color: AppTheme.textPrimary),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -85,7 +86,7 @@ class _TrackingPageState extends State<TrackingPage> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, -4),
                   ),
@@ -112,10 +113,10 @@ class _TrackingPageState extends State<TrackingPage> {
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: AppTheme.primaryOrange.withOpacity(0.1),
+                      color: AppTheme.primaryOrange.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: AppTheme.primaryOrange.withOpacity(0.3),
+                        color: AppTheme.primaryOrange.withValues(alpha: 0.3),
                       ),
                     ),
                     child: const Row(
@@ -147,7 +148,7 @@ class _TrackingPageState extends State<TrackingPage> {
                       CircleAvatar(
                         radius: 28,
                         backgroundColor:
-                            AppTheme.primaryOrange.withOpacity(0.15),
+                            AppTheme.primaryOrange.withValues(alpha: 0.15),
                         child: const Text(
                           'C',
                           style: TextStyle(
@@ -194,10 +195,10 @@ class _TrackingPageState extends State<TrackingPage> {
                       // Botão ligar para motorista
                       Container(
                         decoration: BoxDecoration(
-                          color: AppTheme.success.withOpacity(0.15),
+                          color: AppTheme.success.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: AppTheme.success.withOpacity(0.3),
+                            color: AppTheme.success.withValues(alpha: 0.3),
                           ),
                         ),
                         child: IconButton(
@@ -279,7 +280,8 @@ class _TrackingPageState extends State<TrackingPage> {
                 ),
                 const SizedBox(height: 4),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: Colors.black87,
                     borderRadius: BorderRadius.circular(4),
@@ -307,14 +309,15 @@ class _TrackingRoutePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final routePaint = Paint()
-      ..color = AppTheme.primaryOrange.withOpacity(0.7)
+      ..color = AppTheme.primaryOrange.withValues(alpha: 0.7)
       ..strokeWidth = 5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
     final path = Path()
       ..moveTo(105, 230)
-      ..quadraticBezierTo(size.width * 0.4, size.height * 0.45, size.width - 95, size.height - 250);
+      ..quadraticBezierTo(size.width * 0.4, size.height * 0.45, size.width - 95,
+          size.height - 250);
 
     canvas.drawPath(path, routePaint);
   }

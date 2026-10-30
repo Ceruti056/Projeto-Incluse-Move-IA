@@ -49,8 +49,8 @@ class _SplashPageState extends ConsumerState<SplashPage>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    AppTheme.primaryOrange.withOpacity(0.08),
-                    AppTheme.white.withOpacity(0.0),
+                    AppTheme.primaryOrange.withValues(alpha: 0.08),
+                    AppTheme.white.withValues(alpha: 0.0),
                   ],
                 ),
               ),
@@ -66,8 +66,8 @@ class _SplashPageState extends ConsumerState<SplashPage>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    AppTheme.primaryOrange.withOpacity(0.06),
-                    AppTheme.white.withOpacity(0.0),
+                    AppTheme.primaryOrange.withValues(alpha: 0.06),
+                    AppTheme.white.withValues(alpha: 0.0),
                   ],
                 ),
               ),
@@ -92,7 +92,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
                         height: 136,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppTheme.primaryOrange.withOpacity(0.1),
+                          color: AppTheme.primaryOrange.withValues(alpha: 0.1),
                         ),
                       )
                           .animate(
@@ -121,7 +121,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppTheme.primaryOrange.withOpacity(0.35),
+                              color: AppTheme.primaryOrange.withValues(alpha: 0.35),
                               blurRadius: 28,
                               spreadRadius: 2,
                               offset: const Offset(0, 10),
@@ -136,7 +136,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
                               Icon(
                                 Icons.location_on_rounded,
                                 size: 58,
-                                color: AppTheme.white.withOpacity(0.28),
+                                color: AppTheme.white.withValues(alpha: 0.28),
                               ),
                               // Ícone principal de acessibilidade
                               const Icon(
@@ -226,13 +226,13 @@ class _SplashPageState extends ConsumerState<SplashPage>
                       color: AppTheme.primaryOrangeLight,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppTheme.primaryOrange.withOpacity(0.25),
+                        color: AppTheme.primaryOrange.withValues(alpha: 0.25),
                         width: 1,
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.verified_rounded,
                           size: 14,
@@ -260,12 +260,12 @@ class _SplashPageState extends ConsumerState<SplashPage>
                   // ── Indicador de Carregamento ──────────────────────────────
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 34,
                         height: 34,
                         child: CircularProgressIndicator(
                           strokeWidth: 3,
-                          valueColor: const AlwaysStoppedAnimation<Color>(
+                          valueColor: AlwaysStoppedAnimation<Color>(
                             AppTheme.primaryOrange,
                           ),
                           backgroundColor: AppTheme.surfaceBorder,

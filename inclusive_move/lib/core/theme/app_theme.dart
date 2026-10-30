@@ -163,7 +163,7 @@ class AppTheme {
             letterSpacing: 0.5,
           ),
           elevation: 2,
-          shadowColor: primaryOrange.withOpacity(0.3),
+          shadowColor: primaryOrange.withValues(alpha: 0.3),
         ),
       ),
 
@@ -382,7 +382,7 @@ class AppTheme {
             letterSpacing: 0.5,
           ),
           elevation: 4,
-          shadowColor: primaryOrange.withOpacity(0.4),
+          shadowColor: primaryOrange.withValues(alpha: .4),
         ),
       ),
 
@@ -467,7 +467,7 @@ class AppTheme {
 
       chipTheme: ChipThemeData(
         backgroundColor: const Color(0xFF334155),
-        selectedColor: primaryOrange.withOpacity(0.2),
+        selectedColor: primaryOrange.withValues(alpha: 0.2),
         labelStyle: const TextStyle(color: white, fontSize: 13),
         side: const BorderSide(color: Color(0xFF334155)),
         shape: RoundedRectangleBorder(

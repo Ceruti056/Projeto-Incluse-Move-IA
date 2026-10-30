@@ -45,7 +45,7 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
         border: Border.all(color: AppTheme.surfaceBorder, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -100,7 +100,7 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
+                      color: Colors.black.withValues(alpha: 0.08),
                       blurRadius: 8,
                     ),
                   ],
@@ -121,12 +121,12 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.surfaceWhite.withOpacity(0.95),
+                color: AppTheme.surfaceWhite.withValues(alpha: 0.95),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppTheme.surfaceBorder),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -223,7 +223,7 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
                   height: 50,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppTheme.primaryOrange.withOpacity(0.18),
+                    color: AppTheme.primaryOrange.withValues(alpha: 0.18),
                   ),
                 )
                     .animate(onPlay: (c) => c.repeat(reverse: true))
@@ -238,7 +238,7 @@ class _MapPreviewCardState extends State<MapPreviewCard> {
                     border: Border.all(color: Colors.white, width: 3),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.primaryOrange.withOpacity(0.5),
+                        color: AppTheme.primaryOrange.withValues(alpha: 0.5),
                         blurRadius: 10,
                       ),
                     ],
@@ -258,7 +258,7 @@ class _StreetGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final roadPaint = Paint()
-      ..color = const Color(0xFF334155).withOpacity(0.65)
+      ..color = const Color(0xFF334155).withValues(alpha: 0.65)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 6
       ..strokeCap = StrokeCap.round;
