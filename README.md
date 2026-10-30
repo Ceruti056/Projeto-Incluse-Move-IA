@@ -139,7 +139,7 @@ Obtenha uma chave no [Google Cloud Console](https://console.cloud.google.com) (a
 
 ### 3. Grok AI (xAI)
 Para ativar respostas reais do assistente inteligente:
-1. Obtenha sua API Key em [console.x.ai](https://console.x.ai).
+1. Obtenha sua API Key em [GROK AI]([https://console.groq.com]).
 2. Configure a constante em `lib/features/chat/providers/chat_provider.dart`.
 
 ---
