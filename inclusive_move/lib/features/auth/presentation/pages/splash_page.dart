@@ -28,7 +28,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
     // Navega suavemente após a exibição direto para a home
     Future.delayed(const Duration(milliseconds: 2600), () {
       if (!mounted) return;
-      context.go(AppRoutes.home);
+      context.go(AppRoutes.login);
     });
   }
 

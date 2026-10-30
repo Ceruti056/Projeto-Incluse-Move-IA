@@ -1,6 +1,3 @@
-// ============================================================================
-// features/auth/presentation/pages/login_page.dart - Tela de Login
-// ============================================================================
 // Login com email/senha usando Firebase Auth via Riverpod.
 // Design acessível com fontes grandes e alto contraste.
 // ============================================================================
@@ -41,6 +38,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+  }
+
+  void _onGuestAccess() {
+    ref.read(isGuestModeProvider.notifier).state = true;
+    context.go(AppRoutes.home);
   }
 
   @override
@@ -248,6 +250,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ),
                     ),
                   ).animate(delay: 550.ms).fadeIn().slideY(begin: 0.1),
+
+                  const SizedBox(height: 16),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: OutlinedButton.icon(
+                      onPressed: isLoading ? null : _onGuestAccess,
+                      icon: const Icon(Icons.visibility_outlined),
+                      label: const Text(
+                        'Acessar em Modo Teste (Sem cadastro)',
+                        textAlign: TextAlign.center,
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppTheme.primaryOrange,
+                        side: const BorderSide(color: AppTheme.primaryOrange),
+                      ),
+                    ),
+                  ).animate(delay: 575.ms).fadeIn().slideY(begin: 0.1),
 
                   const SizedBox(height: 24),
 

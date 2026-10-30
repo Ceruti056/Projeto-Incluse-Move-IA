@@ -37,7 +37,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final isLoading = authState.isLoading;
       if (isLoading) return null; // aguarda carregamento
 
-      final isAuthenticated = authState.valueOrNull != null;
+      final isAuthenticated =
+          authState.valueOrNull != null || ref.read(isGuestModeProvider);
       final isSplash = state.matchedLocation == AppRoutes.splash;
       final isAuthRoute = state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.register;

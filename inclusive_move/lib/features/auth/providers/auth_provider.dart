@@ -13,6 +13,9 @@ import '../domain/usecases/sign_in_usecase.dart';
 import '../domain/usecases/sign_up_usecase.dart';
 import '../domain/usecases/sign_out_usecase.dart';
 
+/// Indica que a sessao atual esta usando o acesso local de demonstracao.
+final isGuestModeProvider = StateProvider<bool>((ref) => false);
+
 // ── Repository ───────────────────────────────────────────────────────────────
 
 /// Provider do repositório de autenticação

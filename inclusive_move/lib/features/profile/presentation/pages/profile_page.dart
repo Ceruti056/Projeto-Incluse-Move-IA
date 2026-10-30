@@ -206,6 +206,7 @@ class ProfilePage extends ConsumerWidget {
                   foregroundColor: AppTheme.error,
                 ),
                 onPressed: () async {
+                  ref.read(isGuestModeProvider.notifier).state = false;
                   await ref.read(authFormProvider.notifier).signOut();
                   if (context.mounted) context.go(AppRoutes.login);
                 },
