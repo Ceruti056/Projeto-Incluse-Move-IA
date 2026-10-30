@@ -1,6 +1,3 @@
-// ============================================================================
-// features/chat/presentation/pages/chat_page.dart - Chat com Groq Cloud AI
-// ============================================================================
 // Assistente de IA usando a API Groq Cloud (Llama 3.3 70B Versatile).
 // Suporta entrada por texto e por voz (speech_to_text).
 // ============================================================================
@@ -326,8 +323,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   Widget _buildEmptyState() {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 80),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

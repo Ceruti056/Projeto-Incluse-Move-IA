@@ -1,8 +1,12 @@
 // ============================================================================
 // features/chat/providers/chat_provider.dart - Provider do Chat com Groq Cloud AI
 // ============================================================================
-// Integra a API Groq Cloud (Llama 3.3 70B Versatile) para o assistente conversacional.
+// Integra a API Groq Cloud (openai/gpt-oss-120b) para o assistente conversacional.
 // Documentação: https://console.groq.com/docs/overview
+//
+// IMPORTANTE: Configure a chave da API no arquivo .env:
+//   GROQ_API_KEY=sua_chave_aqui
+// E rode o app com: flutter run --dart-define-from-file=.env
 // ============================================================================
 
 import 'dart:convert';
@@ -58,32 +62,32 @@ class ChatState {
 class ChatNotifier extends StateNotifier<ChatState> {
   ChatNotifier() : super(const ChatState());
 
-  /// Chave da API Groq Cloud (https://console.groq.com/)
-  /// Suporta tanto GROQ_API_KEY quanto GROK_API_KEY para compatibilidade
-  static const String _envGroqKey = String.fromEnvironment('GROQ_API_KEY');
-  static const String _envGrokKey = String.fromEnvironment('GROK_API_KEY');
+  /// Controle de taxa para não estourar o limite gratuito (RPM/TPM)
+  DateTime? _lastRequestTime;
 
+  /// Chave da API Groq — lida via --dart-define-from-file=.env
+  /// Variáveis aceitas: GROQ_API_KEY ou GROK_API_KEY (compatibilidade)
   static String get _apiKey {
-    if (_envGroqKey.isNotEmpty && !_envGroqKey.startsWith('YOUR_')) {
-      return _envGroqKey;
-    }
-    if (_envGrokKey.isNotEmpty && !_envGrokKey.startsWith('YOUR_')) {
-      return _envGrokKey;
-    }
+    const fromEnv = String.fromEnvironment('GROQ_API_KEY');
+    if (fromEnv.isNotEmpty && !fromEnv.startsWith('YOUR_')) return fromEnv;
+    const fromLegacy = String.fromEnvironment('GROK_API_KEY');
+    if (fromLegacy.isNotEmpty && !fromLegacy.startsWith('YOUR_')) return fromLegacy;
     return '';
   }
 
-  /// URL da API Groq Cloud
-  static const String _apiUrl = String.fromEnvironment(
-    'GROQ_API_URL',
-    defaultValue: 'https://api.groq.com/openai/v1/chat/completions',
-  );
+  /// URL da API Groq Cloud (padrão compatível com OpenAI)
+  static String get _apiUrl {
+    const fromEnv = String.fromEnvironment('GROK_API_URL');
+    if (fromEnv.isNotEmpty) return fromEnv;
+    return 'https://api.groq.com/openai/v1/chat/completions';
+  }
 
-  /// Modelo padrão solicitado: Llama 3.3 70B Versatile
-  static const String _model = String.fromEnvironment(
-    'GROQ_MODEL',
-    defaultValue: 'llama-3.3-70b-versatile',
-  );
+  /// Modelo padrão: openai/gpt-oss-120b
+  static String get _model {
+    const fromEnv = String.fromEnvironment('GROK_MODEL');
+    if (fromEnv.isNotEmpty) return fromEnv;
+    return 'openai/gpt-oss-120b';
+  }
 
   /// System prompt que define o comportamento do assistente
   static const String _systemPrompt = '''
@@ -99,15 +103,27 @@ Seu papel é:
 
 IMPORTANTE:
 - Responda SEMPRE em português brasileiro
+- Seja CONCISO e OBJETIVO (no máximo 2 ou 3 parágrafos curtos) para economizar tokens
 - Use linguagem simples, clara e respeitosa
 - Seja paciente e acolhedor, pois nosso público inclui idosos
 - Para informações críticas de segurança, sempre recomende o botão SOS
 - Não forneça informações médicas ou de saúde — recomende profissionais
 ''';
 
-  /// Envia uma mensagem e obtém resposta do Groq Cloud (Llama 3.3 70B Versatile)
+  /// Envia uma mensagem e obtém resposta do Groq Cloud usando openai/gpt-oss-120b com stream
   Future<void> sendMessage(String userMessage) async {
     if (userMessage.trim().isEmpty) return;
+
+    // Evita requisições sobrepostas
+    if (state.isLoading) return;
+
+    // Cooldown de 2s para evitar ultrapassar 30 RPM
+    final now = DateTime.now();
+    if (_lastRequestTime != null &&
+        now.difference(_lastRequestTime!) < const Duration(seconds: 2)) {
+      return;
+    }
+    _lastRequestTime = now;
 
     // Adiciona a mensagem do usuário
     final userMsg = ChatMessage(
@@ -126,72 +142,96 @@ IMPORTANTE:
     // Validação preventiva da chave da API
     if (_apiKey.isEmpty) {
       _handleError(
-        'Sua chave da API Groq ainda não foi configurada! Abra o arquivo .env e cole sua chave real (ex: gsk_...) no campo GROQ_API_KEY.',
+        'Configure sua chave da API Groq (GROQ_API_KEY) no arquivo .env ou em chat_provider.dart.',
       );
       return;
     }
 
     try {
-      // Monta o histórico de mensagens para contexto
+      // Monta o histórico de mensagens para contexto (últimas 4 msgs)
       final messagesHistory = [
         {
           'role': 'system',
           'content': _systemPrompt,
         },
-        // Inclui até as últimas 10 mensagens como contexto
-        ...state.messages.take(10).map(
-              (m) => {
-                'role': m.role == MessageRole.user ? 'user' : 'assistant',
-                'content': m.content,
-              },
-            ),
+        ...(state.messages.length > 4
+                ? state.messages.sublist(state.messages.length - 4)
+                : state.messages)
+            .map(
+          (m) => {
+            'role': m.role == MessageRole.user ? 'user' : 'assistant',
+            'content': m.content,
+          },
+        ),
       ];
 
-      // Chamada à API Groq Cloud (formato OpenAI-compatible)
-      final response = await http.post(
-        Uri.parse(_apiUrl),
-        headers: {
+      // Requisição para Groq Cloud com streaming e parâmetros do modelo openai/gpt-oss-120b
+      final client = http.Client();
+      final request = http.Request('POST', Uri.parse(_apiUrl))
+        ..headers.addAll({
           'Authorization': 'Bearer $_apiKey',
           'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
+          'Accept': 'text/event-stream',
+        })
+        ..body = jsonEncode({
           'model': _model,
           'messages': messagesHistory,
-          'max_tokens': 1024,
           'temperature': 0.7,
-        }),
-      );
+          'max_completion_tokens': 512,
+          'top_p': 0.9,
+          'stream': true,
+          'reasoning_effort': 'low',
+          'stop': null,
+        });
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(utf8.decode(response.bodyBytes));
-        final content = data['choices'][0]['message']['content'] as String? ??
-            'Desculpe, não consegui entender. Tente novamente.';
+      final streamedResponse = await client.send(request);
 
-        // Adiciona a resposta do assistente
-        final assistantMsg = ChatMessage(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          content: content.trim(),
-          role: MessageRole.assistant,
-          timestamp: DateTime.now(),
-        );
+      if (streamedResponse.statusCode == 200) {
+        String accumulatedContent = '';
+        final assistantId = DateTime.now().millisecondsSinceEpoch.toString();
 
-        state = state.copyWith(
-          messages: [...state.messages, assistantMsg],
-          isLoading: false,
-        );
-      } else if (response.statusCode == 401) {
+        await for (final line in streamedResponse.stream
+            .transform(utf8.decoder)
+            .transform(const LineSplitter())) {
+          final trimmed = line.trim();
+          if (trimmed.isEmpty) continue;
+          if (trimmed == 'data: [DONE]') break;
+          if (trimmed.startsWith('data: ')) {
+            try {
+              final jsonStr = trimmed.substring(6);
+              final data = jsonDecode(jsonStr);
+              final delta = data['choices']?[0]?['delta'];
+              final chunk = delta?['content'] as String?;
+              if (chunk != null && chunk.isNotEmpty) {
+                accumulatedContent += chunk;
+                _updateOrAddAssistantMessage(assistantId, accumulatedContent);
+              }
+            } catch (_) {}
+          }
+        }
+
+        if (accumulatedContent.isEmpty) {
+          _updateOrAddAssistantMessage(
+            assistantId,
+            'Desculpe, não consegui entender. Tente novamente.',
+          );
+        } else {
+          state = state.copyWith(isLoading: false);
+        }
+      } else if (streamedResponse.statusCode == 401) {
         _handleError(
           'Chave da API Groq inválida. Verifique sua chave no arquivo .env (https://console.groq.com/keys).',
         );
-      } else if (response.statusCode == 429) {
+      } else if (streamedResponse.statusCode == 429) {
         _handleError(
           'Limite de requisições excedido no Groq Cloud. Aguarde alguns instantes e tente novamente.',
         );
       } else {
+        final errorBytes = await streamedResponse.stream.toBytes();
         String errorMessage =
-            'Erro ao conectar ao assistente (${response.statusCode}).';
+            'Erro ao conectar ao assistente (${streamedResponse.statusCode}).';
         try {
-          final errorData = jsonDecode(utf8.decode(response.bodyBytes));
+          final errorData = jsonDecode(utf8.decode(errorBytes));
           if (errorData is Map) {
             final err = errorData['error'];
             if (err is Map && err['message'] != null) {
@@ -206,6 +246,28 @@ IMPORTANTE:
     } catch (e) {
       _handleError(
         'Erro de conexão com o assistente Groq. Verifique sua rede e tente novamente.',
+      );
+    }
+  }
+
+  /// Atualiza uma mensagem existente em streaming ou adiciona uma nova
+  void _updateOrAddAssistantMessage(String id, String content) {
+    final existingIndex = state.messages.indexWhere((m) => m.id == id);
+    final msg = ChatMessage(
+      id: id,
+      content: content.trimLeft(),
+      role: MessageRole.assistant,
+      timestamp: DateTime.now(),
+    );
+
+    if (existingIndex >= 0) {
+      final updatedList = List<ChatMessage>.from(state.messages);
+      updatedList[existingIndex] = msg;
+      state = state.copyWith(messages: updatedList, isLoading: false);
+    } else {
+      state = state.copyWith(
+        messages: [...state.messages, msg],
+        isLoading: false,
       );
     }
   }
