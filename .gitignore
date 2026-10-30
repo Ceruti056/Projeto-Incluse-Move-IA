@@ -1,0 +1,64 @@
+# ==============================================================================
+# InclusIMove - .gitignore Unificado (Raiz do Repositório)
+# ==============================================================================
+
+# ── Variáveis de Ambiente & Segredos ──────────────────────────────────────────
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+**/.env
+**/.env.*
+!**/.env.example
+
+# ── Documentação Interna ──────────────────────────────────────────────────────
+docs/
+/docs/
+
+# ── Sistema Operacional & Arquivos Temporários ────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.class
+*.log
+*.pyc
+*.swp
+*.swo
+*~
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# ── IDEs & Editores ───────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ── Flutter, Dart & Dependências ──────────────────────────────────────────────
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.pub-cache/
+**/.pub/
+**/build/
+**/coverage/
+**/doc/api/
+**/.widget_preview/
+
+# ── Android & iOS Build Artifacts ─────────────────────────────────────────────
+**/android/.gradle/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/ios/Flutter/.last_build_id
+**/ios/Pods/
+app.*.symbols
+app.*.map.json
