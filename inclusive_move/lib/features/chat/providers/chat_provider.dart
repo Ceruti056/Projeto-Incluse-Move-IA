@@ -1,12 +1,8 @@
 // ============================================================================
 // features/chat/providers/chat_provider.dart - Provider do Chat com Groq Cloud AI
 // ============================================================================
-// Integra a API Groq Cloud (openai/gpt-oss-120b) para o assistente conversacional.
+// Integra a API Groq Cloud (Llama 3.3 70B Versatile) para o assistente conversacional.
 // Documentação: https://console.groq.com/docs/overview
-//
-// IMPORTANTE: Configure a chave da API no arquivo .env:
-//   GROQ_API_KEY=sua_chave_aqui
-// E rode o app com: flutter run --dart-define-from-file=.env
 // ============================================================================
 
 import 'dart:convert';
@@ -65,27 +61,19 @@ class ChatNotifier extends StateNotifier<ChatState> {
   /// Controle de taxa para não estourar o limite gratuito (RPM/TPM)
   DateTime? _lastRequestTime;
 
-  /// Chave da API Groq — lida via --dart-define-from-file=.env
-  /// Variáveis aceitas: GROQ_API_KEY ou GROK_API_KEY (compatibilidade)
-  static String get _apiKey {
-    const fromEnv = String.fromEnvironment('GROQ_API_KEY');
-    if (fromEnv.isNotEmpty && !fromEnv.startsWith('YOUR_')) return fromEnv;
-    const fromLegacy = String.fromEnvironment('GROK_API_KEY');
-    if (fromLegacy.isNotEmpty && !fromLegacy.startsWith('YOUR_')) return fromLegacy;
-    return '';
-  }
+  static const String _apiKey = String.fromEnvironment('GROK_API_KEY');
 
-  /// URL da API Groq Cloud (padrão compatível com OpenAI)
+  /// URL da API Groq Cloud
   static String get _apiUrl {
-    const fromEnv = String.fromEnvironment('GROK_API_URL');
-    if (fromEnv.isNotEmpty) return fromEnv;
+    const urlK = String.fromEnvironment('GROK_API_URL');
+    if (urlK.isNotEmpty) return urlK;
     return 'https://api.groq.com/openai/v1/chat/completions';
   }
 
-  /// Modelo padrão: openai/gpt-oss-120b
+  /// Modelo padrão solicitado: openai/gpt-oss-120b
   static String get _model {
-    const fromEnv = String.fromEnvironment('GROK_MODEL');
-    if (fromEnv.isNotEmpty) return fromEnv;
+    const modelK = String.fromEnvironment('GROK_MODEL');
+    if (modelK.isNotEmpty) return modelK;
     return 'openai/gpt-oss-120b';
   }
 
@@ -110,6 +98,7 @@ IMPORTANTE:
 - Não forneça informações médicas ou de saúde — recomende profissionais
 ''';
 
+  /// Envia uma mensagem e obtém resposta do Groq Cloud (Llama 3.3 70B Versatile)
   /// Envia uma mensagem e obtém resposta do Groq Cloud usando openai/gpt-oss-120b com stream
   Future<void> sendMessage(String userMessage) async {
     if (userMessage.trim().isEmpty) return;
@@ -142,18 +131,19 @@ IMPORTANTE:
     // Validação preventiva da chave da API
     if (_apiKey.isEmpty) {
       _handleError(
-        'Configure sua chave da API Groq (GROQ_API_KEY) no arquivo .env ou em chat_provider.dart.',
+        'Sua chave da API Groq ainda não foi configurada!',
       );
       return;
     }
 
     try {
-      // Monta o histórico de mensagens para contexto (últimas 4 msgs)
+      // Monta o histórico de mensagens para contexto
       final messagesHistory = [
         {
           'role': 'system',
           'content': _systemPrompt,
         },
+        // Inclui até as últimas 10 mensagens como contexto
         ...(state.messages.length > 4
                 ? state.messages.sublist(state.messages.length - 4)
                 : state.messages)
