@@ -9,7 +9,7 @@
 ![Grok AI](https://img.shields.io/badge/Grok_AI-xAI-FF6B35?style=for-the-badge)
 
 **Aplicativo de transporte especializado para idosos e pessoas com deficiência.**  
-_Projeto aprovado no Programa Centelha — Espírito Santo_
+
 
 </div>
 
