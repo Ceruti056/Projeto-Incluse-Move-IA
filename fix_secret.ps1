@@ -27,3 +27,4 @@ git rebase -i d5f78cb
 
 Write-Host "Rebase parado para edição. Estado atual:" -ForegroundColor Green
 git status
+
