@@ -7,7 +7,6 @@
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Riverpod](https://img.shields.io/badge/Riverpod-2.5+-00BCD4?style=for-the-badge)
 ![Grok AI](https://img.shields.io/badge/Grok_AI-xAI-FF6B35?style=for-the-badge)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 **Aplicativo de transporte especializado para idosos e pessoas com deficiência.**  
 _Projeto aprovado no Programa Centelha — Espírito Santo_
@@ -47,7 +46,6 @@ O **InclusIMove** é um aplicativo mobile e web multiplataforma desenvolvido em 
 - **Geolocalização:** Google Maps Flutter, Geolocator e Geocoding
 - **Inteligência Artificial:** Grok AI (`grok-3-mini` via xAI REST API)
 - **Estilização & UX:** Google Fonts (Inter), `flutter_animate` e ícones Material Rounded
-- **Containerização:** Docker (multi-stage build) + Nginx Alpine para Flutter Web
 
 ---
 
@@ -55,9 +53,6 @@ O **InclusIMove** é um aplicativo mobile e web multiplataforma desenvolvido em 
 
 ```text
 Projeto-Incluse-Move-IA/
-├── Dockerfile                  # Build multi-stage para Flutter Web + Nginx
-├── docker-compose.yml          # Orquestração do container Web (porta 8081)
-├── .dockerignore               # Otimização de build do Docker
 ├── docs/                       # Documentação técnica e de negócio
 │
 └── inclusive_move/             # Projeto Flutter
@@ -117,23 +112,6 @@ flutter run              # Para emulador Android/iOS conectado
 > [!TIP]
 > **Modo Teste (Sem Cadastro):**  
 > Na tela inicial de login, clique no botão **`Acessar em Modo Teste (Sem cadastro)`** para navegar por todas as funcionalidades sem precisar cadastrar email ou configurar chaves externas imediatamente.
-
----
-
-### Opção 2: Execução via Docker (Flutter Web em Produção)
-
-Para rodar a versão Web empacotada em um servidor Nginx leve e otimizado:
-
-```powershell
-# Na raiz do projeto (onde está o docker-compose.yml):
-docker compose up -d --build
-```
-Acesse o aplicativo em seu navegador em: **`http://localhost:8081`**
-
-Para parar o container:
-```powershell
-docker compose down
-```
 
 ---
 
