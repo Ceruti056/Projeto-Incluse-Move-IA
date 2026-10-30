@@ -64,18 +64,10 @@ class ChatNotifier extends StateNotifier<ChatState> {
   static const String _apiKey = String.fromEnvironment('GROK_API_KEY');
 
   /// URL da API Groq Cloud
-  static String get _apiUrl {
-    const urlK = String.fromEnvironment('GROK_API_URL');
-    if (urlK.isNotEmpty) return urlK;
-    return 'https://api.groq.com/openai/v1/chat/completions';
-  }
+  static const String _apiUrl = String.fromEnvironment('GROK_API_URL');
 
   /// Modelo padrão solicitado: openai/gpt-oss-120b
-  static String get _model {
-    const modelK = String.fromEnvironment('GROK_MODEL');
-    if (modelK.isNotEmpty) return modelK;
-    return 'openai/gpt-oss-120b';
-  }
+  static const String _model = String.fromEnvironment('GROK_MODEL');
 
   /// System prompt que define o comportamento do assistente
   static const String _systemPrompt = '''
